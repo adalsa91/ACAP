@@ -1,6 +1,7 @@
 #include "CImg.h"
 #include <iostream>
 #include <chrono>
+#include <cmath>
 
 using namespace cimg_library;
 using namespace std::chrono;
