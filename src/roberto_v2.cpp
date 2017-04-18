@@ -36,11 +36,10 @@ int main(int argc, char* argv[]) {
     };
 
     double **result = new double*[(height-2)*spectrum];
-    for (int i = 0; i < (height-2)*spectrum; i++){
+    for (int i = 0; i < (height-2)*spectrum; i++)
         result[i] = new double[(width-2)];
-        std::cout << i << " - " <<std::endl;
-}
 
+    //std::vector<std::vector<double>> result(height-2);
     for (int s = 0; s < spectrum; s++) {
         for (int i = 1; i < height-1; i++) {
             for (int j = 1; j < width-1; j++) {
@@ -55,6 +54,7 @@ int main(int argc, char* argv[]) {
 
                 double r = abs(g_x) + abs(g_y);
                 result[(i-1) + (s*height)][j-1] = (r < 255) ? r : 255;
+                //result.at(i-1).push_back((r < 255) ? r : 255);
             }
         }
     }

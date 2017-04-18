@@ -42,12 +42,15 @@ int main(int argc, char* argv[]) {
 
     //Work-sharing tasks
     if (rank == 0) {
+
         //Load original image
         CImg<double> original_image(argv[1]);
 
+        double t_start = MPI_Wtime();
+
         //Crop image vertically to distribute work
         int width_slice = original_image.width() / (nproc-1);
-       
+
         for (int i = 0; i < (nproc-1); i++) {
             CImg<double> cropped_image = original_image.get_crop(
                                             i * width_slice,
@@ -62,7 +65,10 @@ int main(int argc, char* argv[]) {
         CImg<double> result = MPI_Recv_image(1, 1, MPI_COMM_WORLD, &status);
         for (int i=2; i<nproc; i++) {
             result.append(MPI_Recv_image(i, 1, MPI_COMM_WORLD, &status));
-        } 
+        }
+
+        double t_end = MPI_Wtime();
+        printf("Calculation time %f\n", t_end - t_start);
 
         result.save("result.png");
 
